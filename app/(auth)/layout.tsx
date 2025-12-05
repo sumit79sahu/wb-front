@@ -1,6 +1,6 @@
-import { Col, Row, Flex, Avatar } from "antd";
+import { Col, Row, Flex } from "antd";
 import Link from "next/link";
-import React from "react";
+import LoginAnimation from "./_components/login-animation";
 
 const AuthLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   return (
@@ -17,17 +17,6 @@ const AuthLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
 
             <div className="my-0 mx-auto w-full max-w-[300px]">
               <Flex vertical gap={48}>
-                <Flex vertical gap={16}>
-                  <Flex vertical gap={4}>
-                    <h3 className="font-bold text-[20px] text-black ff-title">
-                      Manage inventory with ease
-                    </h3>
-                    <p className="font-normal text-[14px] text-gray">
-                      Less hassle. Increased Productivity.
-                    </p>
-                  </Flex>
-                </Flex>
-
                 {children}
 
                 <p className="font-normal text-[12px] text-gray">
@@ -65,7 +54,17 @@ const AuthLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
             vertical
             justify="space-between"
           >
-          <div></div>
+            <div className="relative h-full w-full overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500 via-indigo-500 to-purple-600 opacity-90 animate-gradient" />
+
+              <div className="absolute -top-10 -left-10 h-60 w-60 bg-white/20 rounded-full blur-3xl animate-float-slow"></div>
+              <div className="absolute bottom-10 right-10 h-72 w-72 bg-white/10 rounded-full blur-2xl animate-float"></div>
+              <div className="absolute inset-0 opacity-[0.08] bg-[url('https://www.toptal.com/designers/subtlepatterns/uploads/dot-grid.png')]"></div>
+
+              <div className="absolute inset-0 flex items-center justify-center">
+                <LoginAnimation />
+              </div>
+            </div>
           </Flex>
         </Col>
       </Row>
