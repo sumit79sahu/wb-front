@@ -26,6 +26,7 @@ const ResetPassword = () => {
         message.success(data?.message);
         redirect("/");
       } else {
+        console.log(data)
         message.error(data?.message);
       }
     },

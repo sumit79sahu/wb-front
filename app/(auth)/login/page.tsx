@@ -16,6 +16,7 @@ const Login = () => {
         body: values,
         credentials: "include",
       });
+
       if (data?.success) {
         redirect("/");
       } else {

@@ -1,4 +1,5 @@
 @import "tailwindcss";
+
 @keyframes gradientMove {
   0% {
     background-position: 0% 50%;
@@ -54,3 +55,11 @@
 .animate-fade-in-delay {
   animation: fadeIn 1.6s ease forwards;
 }
+
+
+
+.ant-dropdown-menu .ant-dropdown-menu-item-active {
+  background-color: #136ae317 !important;
+  color: #0096FF !important;
+}
+
