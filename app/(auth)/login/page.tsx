@@ -8,7 +8,11 @@ import { redirect } from "next/navigation";
 import { useActionState, startTransition } from "react";
 import logo from "@/public/logo.png";
 import Image from "next/image";
+
+import { useAppDispatch } from "@/lib/hook";
+import { loggedUser } from "@/lib/slices/user.slice";
 const Login = () => {
+  const dispatch = useAppDispatch();
   const [, loginUser, isLoading] = useActionState(
     async (_: unknown, values: { email: string; password: string }) => {
       const data = await postRequest<{ email: string; password: string }>({
@@ -18,6 +22,7 @@ const Login = () => {
       });
 
       if (data?.success) {
+        dispatch(loggedUser({loading:false,user:data?.data}));
         redirect("/");
       } else {
         message.error(data?.message);

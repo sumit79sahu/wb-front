@@ -1,20 +1,50 @@
+"user client";
+import { ENDPOINTS } from "@/constants/endpoints";
+import { useAppDispatch, useAppSelector } from "@/lib/hook";
+import { loggedUser } from "@/lib/slices/user.slice";
+import { getRequest } from "@/utils/request";
 import { IconLogout, IconSettings } from "@tabler/icons-react";
-import { Avatar, Dropdown,Button, Flex } from "antd";
+import { Avatar, Dropdown, Flex, message } from "antd";
 import type { MenuProps } from "antd";
-import { useActionState } from "react";
+import { useRouter } from "next/navigation";
+
 const NavbarDropdown = () => {
-
-
-
+  const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.user);
+  const router = useRouter();
   const items: MenuProps["items"] = [
-    { key: "3", label: <button className="bg-none">Logout</button>, icon: <IconLogout size={20}/> },
+    {
+      key: "3",
+      label: (
+        <button
+          className="bg-none"
+          onClick={async () => {
+            dispatch(loggedUser({ loading: true, user: null }));
+            const response = await getRequest({
+              endpoint: ENDPOINTS.logout,
+              credentials: "include",
+            });
+            if (response?.success) {
+              dispatch(loggedUser({ loading: false, user: null }));
+              message.success(response?.message);
+              router.push("/login");
+            } else {
+              message.error(response?.message);
+            }
+          }}
+        >
+          Logout
+        </button>
+      ),
+      icon: <IconLogout size={20} />,
+    },
   ];
 
   return (
     <Dropdown
       className="border"
       menu={{
-        items:items,
+        items: items,
       }}
       trigger={["click"]}
     >
@@ -29,7 +59,7 @@ const NavbarDropdown = () => {
           size={"default"}
           className="!mt-[5px] !mb-[6px]"
         >
-          S
+          {user?.first_name.charAt(0)?.toUpperCase()}
         </Avatar>
         <IconSettings size={24} color="#0096FF" />
       </Flex>
