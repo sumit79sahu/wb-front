@@ -1,4 +1,4 @@
-"use client";
+
 import { IconLayoutSidebarLeftCollapse } from "@tabler/icons-react";
 import { Button, Drawer, Flex } from "antd";
 import { Activity, Dispatch, SetStateAction } from "react";

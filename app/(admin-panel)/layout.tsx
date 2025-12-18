@@ -1,9 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import Navbar from "./_components/navbar/navbar";
 import Sidebar from "./_components/sidebar";
-import { Flex } from "antd";
+import { Flex, message, Spin } from "antd";
+import { useAppDispatch, useAppSelector } from "@/lib/hook";
+import { getRequest } from "@/utils/request";
+import { ENDPOINTS } from "@/constants/endpoints";
+import { loggedUser } from "@/lib/slices/user.slice";
 
 const AdminPanelLayout = ({
   children,
@@ -11,27 +15,46 @@ const AdminPanelLayout = ({
   const [collapsed, setCollapsed] = useState(false);
   const [activeDrawer, setActiveDrawer] = useState(false);
   const [open, setOpen] = useState(false);
-
+  const [isPending, startTransition] = useTransition();
+  const { loading, user } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 1024) {
         setCollapsed(true);
         setActiveDrawer(true);
       } else {
-        setCollapsed(false)
-        setActiveDrawer(false)
+        setCollapsed(false);
+        setActiveDrawer(false);
       }
     };
 
     handleResize();
     window.addEventListener("resize", handleResize);
+    if (!user)
+      startTransition(async () => {
+        const response = await getRequest({
+          endpoint: ENDPOINTS.me,
+          credentials: "include",
+        });
+        if (response?.status) {
+          dispatch(loggedUser({ loading: isPending, user: response?.data }));
+        } else {
+          message.error(response?.message);
+        }
+      });
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
   return (
-    <>
+    <Spin spinning={isPending || loading}>
       <Flex className="">
-        <Sidebar collapsed={collapsed} expandFn={() => setCollapsed(true)} open={open} setOpen={setOpen}/>
+        <Sidebar
+          collapsed={collapsed}
+          expandFn={() => setCollapsed(true)}
+          open={open}
+          setOpen={setOpen}
+        />
         <Flex vertical className="w-full">
           <Navbar
             collapsed={collapsed}
@@ -42,7 +65,7 @@ const AdminPanelLayout = ({
           {children}
         </Flex>
       </Flex>
-    </>
+    </Spin>
   );
 };
 
