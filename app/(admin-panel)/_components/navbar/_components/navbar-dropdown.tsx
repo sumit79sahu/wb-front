@@ -17,7 +17,7 @@ const NavbarDropdown = () => {
       key: "3",
       label: (
         <button
-          className="bg-none"
+          className="bg-none "
           onClick={async () => {
             dispatch(loggedUser({ loading: true, user: null }));
             const response = await getRequest({
@@ -52,7 +52,7 @@ const NavbarDropdown = () => {
         align="center"
         justify="center"
         gap={15}
-        className="!bg-[#136ae317] !w-fit  !px-[6px] rounded-full cursor-pointer"
+        className="!bg-[#136ae317] !w-fit  !px-[6px] rounded-full cursor-pointer "
       >
         <Avatar
           style={{ background: "#FDDA0D" }}

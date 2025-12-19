@@ -55,7 +55,7 @@ const AdminPanelLayout = ({
           open={open}
           setOpen={setOpen}
         />
-        <Flex vertical className="w-full">
+        <Flex vertical className="w-full bg-[#F3F6F9]">
           <Navbar
             collapsed={collapsed}
             expandFn={
