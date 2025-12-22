@@ -1,10 +1,20 @@
 export const MENU = [
   {
-    key: "user-managment",
-    label: "User Management",
-  },
-  {
     key: "product-managment",
     label: "Product Management",
+  },
+  {
+    key: "user-managment",
+    label: "User Management",
+    children: [
+      {
+        key: "user",
+        label: "Users",
+      },
+      {
+        key: "customer",
+        label: "Customers",
+      },
+    ],
   },
 ];
