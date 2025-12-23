@@ -78,7 +78,7 @@ const SidebarItem = ({ collapsed }: { collapsed: boolean }) => {
             <>
               <button
                 key={key}
-                onClick={() => setSubMenu(!subMenu)}
+                onClick={() => setSubMenu(label)}
                 className={`!flex items-center justify-between w-full text-[#00033DCC] gap-[10px] rounded-md text-sm font-medium hover:bg-[#136ae317] hover:text-[#0096FF] ${
                   collapsed ? "justify-center" : "pl-[13px] pr-[15px]"
                 } py-[10px]`}
@@ -89,13 +89,13 @@ const SidebarItem = ({ collapsed }: { collapsed: boolean }) => {
                 </Flex>
                 {collapsed ? (
                   ""
-                ) : subMenu ? (
+                ) : subMenu === label ? (
                   <IconChevronUp size={16} className="mt-[2px]" />
                 ) : (
                   <IconChevronDown size={16} className="mt-[2px]" />
                 )}
               </button>
-              <Activity mode={subMenu ? "visible" : "hidden"}>
+              <Activity mode={subMenu === label ? "visible" : "hidden"}>
                 {children.map(({ label, key }) => (
                   <button
                     key={key}

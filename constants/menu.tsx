@@ -17,4 +17,18 @@ export const MENU = [
       },
     ],
   },
+  {
+    key: "order-management",
+    label: "Order Management",
+    children: [
+      {
+        key: "user",
+        label: "Users",
+      },
+      {
+        key: "customer",
+        label: "Customers",
+      },
+    ],
+  },
 ];
