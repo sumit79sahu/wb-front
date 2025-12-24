@@ -68,3 +68,11 @@
 .ant-dropdown-menu .ant-dropdown-menu-item {
   color: #00033d !important;
 }
+
+.ant-drawer .ant-drawer-header {
+  padding: 0 !important;
+  padding: 10px 10px !important;
+}
+.ant-drawer .ant-drawer-body {
+  padding: 0 !important;
+}
