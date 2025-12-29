@@ -1,3 +1,5 @@
+import { title } from "process";
+
 export const MENU = [
   {
     key: "product-managment",
@@ -10,6 +12,7 @@ export const MENU = [
       {
         key: "user",
         label: "Users",
+        path: "/list-users",
       },
       {
         key: "customer",

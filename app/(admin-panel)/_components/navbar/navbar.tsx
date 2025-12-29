@@ -13,23 +13,26 @@ const Navbar = ({
   return (
     <Flex
       align="center"
-      className={`border-b  w-full border-gray-300  !py-[9.9px] 2xl:!py-[9.6px] !px-[20px] bg-white ${
+      justify="space-between"
+      className={`border-b  w-full border-gray-300  !py-[9.4px] 2xl:!py-[9.2px] !px-[20px] bg-white sticky top-0 z-[100] ${
         collapsed ? "justify-between" : "justify-end"
       }`}
     >
-      <Activity mode={collapsed ? "visible" : "hidden"}>
-        <Button
-          onClick={() => expandFn()}
-          icon={
-            <IconLayoutSidebarRightCollapse
-              size={22}
-              color="#0096FF"
-              className="!mt-[4px]"
-            />
-          }
-          className="!rounded-full !bg-[#136ae317] !p-[18px] !border-none"
-        />
-      </Activity>
+      <Flex gap={20} align="center">
+        <Activity mode={collapsed ? "visible" : "hidden"}>
+          <Button
+            onClick={() => expandFn()}
+            icon={
+              <IconLayoutSidebarRightCollapse
+                size={22}
+                color="#0096FF"
+                className="!mt-[4px]"
+              />
+            }
+            className="!rounded-full !bg-[#136ae317] !p-[18px] !border-none"
+          />
+        </Activity>
+      </Flex>
       <NavbarDropdown />
     </Flex>
   );

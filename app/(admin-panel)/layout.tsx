@@ -55,14 +55,14 @@ const AdminPanelLayout = ({
           open={open}
           setOpen={setOpen}
         />
-        <Flex vertical className="w-full bg-[#F3F6F9]">
+        <Flex vertical className="w-full ">
           <Navbar
             collapsed={collapsed}
             expandFn={
               activeDrawer ? () => setOpen(true) : () => setCollapsed(false)
             }
           />
-          {children}
+          <main className="px-[20px] py-[36px] ">{children}</main>
         </Flex>
       </Flex>
     </Spin>

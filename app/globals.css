@@ -76,3 +76,12 @@
 .ant-drawer .ant-drawer-body {
   padding: 0 !important;
 }
+.ant-btn.ant-btn-default {
+  color: #02152699 !important;
+  border-color: lab(85.1236% -0.612259 -3.7138) !important;
+}
+
+.ant-btn.ant-btn-default:hover {
+  color: #0096ff !important;
+  border-color: #0096ff !important;
+}

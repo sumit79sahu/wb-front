@@ -11,6 +11,7 @@ import Image from "next/image";
 import { MENU } from "@/constants/menu";
 import { MENU_ICON } from "@/constants/menu-icon";
 import React from "react";
+import { redirect } from "next/navigation";
 
 const Sidebar = ({
   collapsed,
@@ -26,7 +27,7 @@ const Sidebar = ({
   return (
     <>
       <div
-        className={`border-r border-gray-300 hidden md:block  h-[100svh]    ${
+        className={`border-r border-gray-300 hidden md:block  h-[100svh] sticky bottom-0 top-0   ${
           collapsed ? "!min-w-[80px]" : "!min-w-[250px]"
         }`}
       >
@@ -101,7 +102,7 @@ const SidebarItem = ({
 }) => {
   const [subMenu, setSubMenu] = useState(null);
   return (
-    <Flex className="!px-[10px] !py-[30px]" gap={2} vertical>
+    <Flex className="!px-[10px] !py-[30px] " gap={2} vertical>
       {MENU.map(({ label, key, children }) => {
         if (children && children.length) {
           return (
@@ -136,10 +137,11 @@ const SidebarItem = ({
                 {collapsed && !drawer ? (
                   <div className="relative" key={key}>
                     <div className="absolute top-[-40px] left-full ml-5 px-[2px] py-[2px] w-36 bg-white rounded-md shadow-lg  font-medium  z-50">
-                      {children.map(({ label, key }) => (
+                      {children.map(({ label, key, path }) => (
                         <button
-                          className="w-full text-left px-3 py-2 text-sm hover:!bg-[#136ae317] rounded-md"
+                          className="w-full text-left px-3 py-[5px] text-sm hover:!bg-[#136ae317] rounded-md"
                           key={key}
+                          onClick={() => redirect(path)}
                         >
                           {label}
                         </button>
@@ -147,9 +149,10 @@ const SidebarItem = ({
                     </div>
                   </div>
                 ) : (
-                  children.map(({ label, key }) => (
+                  children.map(({ label, key, path }) => (
                     <button
                       key={key}
+                      onClick={() => redirect(path)}
                       className={`!flex items-center w-full text-[#00033DCC] gap-[10px] rounded-md text-sm font-medium hover:bg-[#136ae317] hover:text-[#0096FF] ${
                         collapsed && !drawer ? "justify-center" : "px-[40px]"
                       } py-[5px]`}
@@ -169,6 +172,7 @@ const SidebarItem = ({
             className={`!flex items-center w-full text-[#00033DCC] gap-[10px] rounded-md text-sm font-medium hover:bg-[#136ae317] hover:text-[#0096FF] ${
               collapsed && !drawer ? "justify-center" : "px-[13px]"
             } py-[10px]`}
+            onClick={() => redirect(path)}
           >
             {MENU_ICON[label]}
             {collapsed && !drawer ? "" : label}
