@@ -14,7 +14,7 @@ const Navbar = ({
     <Flex
       align="center"
       justify="space-between"
-      className={`border-b  w-full border-gray-300  !py-[9.4px] 2xl:!py-[9.2px] !px-[20px] bg-white sticky top-0 z-[100] ${
+      className={`border-b  w-full border-gray-300  !py-[9.8px] 2xl:!py-[9.7px] !px-[20px] bg-white sticky top-0 z-[100] ${
         collapsed ? "justify-between" : "justify-end"
       }`}
     >

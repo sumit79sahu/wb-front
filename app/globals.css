@@ -2,6 +2,8 @@
 
 :root {
   color: #00033d;
+
+  --text-primary: #00033d;
 }
 
 @keyframes gradientMove {
@@ -66,7 +68,7 @@
 }
 
 .ant-dropdown-menu .ant-dropdown-menu-item {
-  color: #00033d !important;
+  color: var(--text-primary) !important;
 }
 
 .ant-drawer .ant-drawer-header {
@@ -84,4 +86,22 @@
 .ant-btn.ant-btn-default:hover {
   color: #0096ff !important;
   border-color: #0096ff !important;
+}
+
+.ant-table-wrapper .ant-table-thead > tr > th {
+  background-color: #f4f8f9 !important;
+  padding: 10px !important;
+  color: var(--text-primary) !important;
+  font-size: 14px !important;
+  border-bottom: 1px solid #d9dee0 !important;
+}
+
+.ant-table-wrapper .ant-table-tbody > tr > td {
+  padding: 10px 10px !important;
+  color: var(--text-primary) !important;
+  border-color: #d9dee0 !important;
+}
+
+.ant-table-wrapper .ant-table-tbody > tr.ant-table-row:last-of-type > td {
+  border-bottom: none;
 }

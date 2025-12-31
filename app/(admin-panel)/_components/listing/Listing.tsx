@@ -1,50 +1,51 @@
 "use client";
-import { Table, TableColumnsType } from "antd";
+import { message, Table } from "antd";
 import ListingHeader from "./_components/listing-header";
+import type { ColumnsType } from "antd/es/table";
+import { useEffect, useState } from "react";
+import { getRequest } from "@/utils/request";
 
-interface DataType {
-  key: React.Key;
-  name: string;
-  age: number;
-  address: string;
-}
+type ListingProps<T> = {
+  columns: ColumnsType<T>;
+  endpoint: string;
+};
 
-const columns: TableColumnsType<DataType> = [
-  {
-    title: "Name",
-    dataIndex: "name",
-  },
-  {
-    title: "Age",
-    dataIndex: "age",
-  },
-  {
-    title: "Address",
-    dataIndex: "address",
-  },
-];
+function Listing<T>({ columns, endpoint }: ListingProps<T>) {
+  const [listingData, setListingData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const fetchData = async () => {
+    setLoading(true);
+    const data = await getRequest({
+      endpoint: endpoint,
+      credentials: "include",
+    });
+    if (data?.success) {
+      setListingData(data?.data);
+      setLoading(false);
+    } else {
+      setLoading(false);
+      message.error(data?.message);
+    }
+  };
 
-const dataSource = Array.from({ length: 8 }).map<DataType>((_, i) => ({
-  key: i,
-  name: `Edward King ${i}`,
-  age: 32,
-  address: `London, Park Lane no. ${i}`,
-}));
-
-const Listing = () => {
+  useEffect(() => {
+    fetchData();
+  }, []);
   return (
     <>
       <ListingHeader>
-        <Table<DataType>
-          bordered
-          title={() => <>sumit</>}
-          columns={columns}
-          dataSource={dataSource}
-          pagination={false}
-        />
+        <div className="border overflow-hidden rounded-[8px] border-[#d9dee0]">
+          <Table
+            rowKey={"_id"}
+            columns={columns}
+            dataSource={listingData}
+            pagination={false}
+            loading={loading}
+          />
+        </div>
       </ListingHeader>
     </>
   );
-};
+}
 
 export default Listing;

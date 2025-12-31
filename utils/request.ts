@@ -50,6 +50,7 @@ export const getRequest = async ({
         next,
       }
     );
+
     return response.json();
   } catch (error: unknown) {
     console.log(error);
