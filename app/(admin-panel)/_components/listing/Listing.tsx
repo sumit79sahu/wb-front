@@ -37,6 +37,8 @@ function Listing<T>({ columns, endpoint }: ListingProps<T>) {
         <div className="border overflow-hidden rounded-[8px] border-[#d9dee0]">
           <Table
             rowKey={"_id"}
+            title={<>
+            </>}
             columns={columns}
             dataSource={listingData}
             pagination={false}
