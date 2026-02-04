@@ -12,9 +12,9 @@ const ListingSearch = ({
 }) => {
 
   return (
-    <Flex gap={15} justify="flex-end" align="center">
+    <Flex gap={15} justify="flex-end" align="end">
       <Input
-        className="sm:!w-auto !w-full"
+        className="!w-auto"
         prefix={<IconSearch size={18} color="#02152699" />}
         placeholder="Search..."
         value={search}

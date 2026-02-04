@@ -29,8 +29,8 @@ const Sidebar = ({
   return (
     <>
       <div
-        className={`border-r border-gray-300 hidden md:block h-[100svh] sticky bottom-0 top-0 transition-all duration-300 ease-in-out overflow-x-hidden ${
-          collapsed ? "!min-w-[80px] w-[80px]" : "!min-w-[250px] w-[250px]"
+        className={`border-r border-gray-300 hidden md:block  h-[100svh] sticky bottom-0 top-0   ${
+          collapsed ? "!min-w-[80px]" : "!min-w-[250px]"
         }`}
       >
         <Flex
@@ -48,10 +48,10 @@ const Sidebar = ({
             className="!px-[5px]"
           />
           <Activity mode={collapsed ? "hidden" : "visible"}>
-            <Tooltip title="Collapse Sidebar" placement="right">
+            <Tooltip title="Collapse sidebar" placement="right">
               <Button
                 onClick={expandFn}
-                aria-label="Collapse Sidebar"
+                aria-label="Collapse sidebar"
                 icon={
                   <IconLayoutSidebarLeftCollapse
                     size={22}
@@ -127,7 +127,7 @@ const SidebarItem = ({
                           return label;
                         })
                       }
-                      aria-label={collapsed && !drawer ? label : undefined}
+                      aria-label={label}
                       className={`!flex items-center justify-between w-full text-[#00033DCC] gap-[10px] rounded-md text-sm font-medium hover:bg-[#136ae317] hover:text-[#0096FF] ${
                         collapsed && !drawer
                           ? "justify-center"
@@ -198,8 +198,8 @@ const SidebarItem = ({
                 className={`!flex items-center w-full text-[#00033DCC] gap-[10px] rounded-md text-sm font-medium hover:bg-[#136ae317] hover:text-[#0096FF] ${
                   collapsed && !drawer ? "justify-center" : "px-[13px]"
                 } py-[10px]`}
+                aria-label={label}
                 onClick={() => redirect(path)}
-                aria-label={collapsed && !drawer ? label : undefined}
               >
                 {MENU_ICON[label]}
                 {collapsed && !drawer ? "" : label}

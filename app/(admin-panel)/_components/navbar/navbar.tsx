@@ -20,10 +20,10 @@ const Navbar = ({
     >
       <Flex gap={20} align="center">
         <Activity mode={collapsed ? "visible" : "hidden"}>
-          <Tooltip title="Expand Sidebar" placement="right">
+          <Tooltip title="Expand sidebar" placement="right">
             <Button
               onClick={() => expandFn()}
-              aria-label="Expand Sidebar"
+              aria-label="Expand sidebar"
               icon={
                 <IconLayoutSidebarRightCollapse
                   size={22}
