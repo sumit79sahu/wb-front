@@ -22,6 +22,8 @@ const Navbar = ({
         <Activity mode={collapsed ? "visible" : "hidden"}>
           <Button
             onClick={() => expandFn()}
+            aria-label="Expand sidebar"
+            title="Expand sidebar"
             icon={
               <IconLayoutSidebarRightCollapse
                 size={22}

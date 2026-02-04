@@ -4,7 +4,7 @@ import {
   IconLayoutSidebarLeftCollapse,
   IconX,
 } from "@tabler/icons-react";
-import { Button, Drawer, Flex } from "antd";
+import { Button, Drawer, Flex, Tooltip } from "antd";
 import { Activity, Dispatch, SetStateAction, useState } from "react";
 import logo from "@/public/logo.png";
 import Image from "next/image";
@@ -50,6 +50,8 @@ const Sidebar = ({
           <Activity mode={collapsed ? "hidden" : "visible"}>
             <Button
               onClick={expandFn}
+              aria-label="Collapse sidebar"
+              title="Collapse sidebar"
               icon={
                 <IconLayoutSidebarLeftCollapse
                   size={22}
@@ -80,6 +82,7 @@ const Sidebar = ({
               className="!px-[5px]"
             />
             <Button
+              aria-label="Close sidebar"
               icon={<IconX className="mt-[5px]" size={22} color="#00033DCC" />}
               type="text"
               onClick={() => setOpen(false)}
@@ -112,32 +115,37 @@ const SidebarItem = ({
             <React.Fragment key={key}>
               {permissions.some((item) => user?.permissions?.includes(item)) ? (
                 <React.Fragment>
-                  <button
-                    key={key}
-                    onClick={() =>
-                      setSubMenu((pre) => {
-                        if (pre === label) return null;
-                        return label;
-                      })
-                    }
-                    className={`!flex items-center justify-between w-full text-[#00033DCC] gap-[10px] rounded-md text-sm font-medium hover:bg-[#136ae317] hover:text-[#0096FF] ${
-                      collapsed && !drawer
-                        ? "justify-center"
-                        : "pl-[13px] pr-[15px]"
-                    } py-[10px]`}
+                  <Tooltip
+                    title={collapsed && !drawer ? label : ""}
+                    placement="right"
                   >
-                    <Flex gap={10}>
-                      {MENU_ICON[label]}
-                      {collapsed && !drawer ? "" : label}
-                    </Flex>
-                    {collapsed && !drawer ? (
-                      ""
-                    ) : subMenu === label ? (
-                      <IconChevronUp size={16} className="mt-[2px]" />
-                    ) : (
-                      <IconChevronDown size={16} className="mt-[2px]" />
-                    )}
-                  </button>
+                    <button
+                      key={key}
+                      onClick={() =>
+                        setSubMenu((pre) => {
+                          if (pre === label) return null;
+                          return label;
+                        })
+                      }
+                      className={`!flex items-center justify-between w-full text-[#00033DCC] gap-[10px] rounded-md text-sm font-medium hover:bg-[#136ae317] hover:text-[#0096FF] ${
+                        collapsed && !drawer
+                          ? "justify-center"
+                          : "pl-[13px] pr-[15px]"
+                      } py-[10px]`}
+                    >
+                      <Flex gap={10}>
+                        {MENU_ICON[label]}
+                        {collapsed && !drawer ? "" : label}
+                      </Flex>
+                      {collapsed && !drawer ? (
+                        ""
+                      ) : subMenu === label ? (
+                        <IconChevronUp size={16} className="mt-[2px]" />
+                      ) : (
+                        <IconChevronDown size={16} className="mt-[2px]" />
+                      )}
+                    </button>
+                  </Tooltip>
                   <Activity mode={subMenu === label ? "visible" : "hidden"}>
                     {collapsed && !drawer ? (
                       <div className="relative" key={key}>
@@ -181,15 +189,20 @@ const SidebarItem = ({
         }
         return (
           <AuthChecker key={label} permission={permissions}>
-            <button
-              className={`!flex items-center w-full text-[#00033DCC] gap-[10px] rounded-md text-sm font-medium hover:bg-[#136ae317] hover:text-[#0096FF] ${
-                collapsed && !drawer ? "justify-center" : "px-[13px]"
-              } py-[10px]`}
-              onClick={() => redirect(path)}
+            <Tooltip
+              title={collapsed && !drawer ? label : ""}
+              placement="right"
             >
-              {MENU_ICON[label]}
-              {collapsed && !drawer ? "" : label}
-            </button>
+              <button
+                className={`!flex items-center w-full text-[#00033DCC] gap-[10px] rounded-md text-sm font-medium hover:bg-[#136ae317] hover:text-[#0096FF] ${
+                  collapsed && !drawer ? "justify-center" : "px-[13px]"
+                } py-[10px]`}
+                onClick={() => redirect(path)}
+              >
+                {MENU_ICON[label]}
+                {collapsed && !drawer ? "" : label}
+              </button>
+            </Tooltip>
           </AuthChecker>
         );
       })}
