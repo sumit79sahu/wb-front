@@ -29,8 +29,8 @@ const Sidebar = ({
   return (
     <>
       <div
-        className={`border-r border-gray-300 hidden md:block  h-[100svh] sticky bottom-0 top-0   ${
-          collapsed ? "!min-w-[80px]" : "!min-w-[250px]"
+        className={`border-r border-gray-300 hidden md:block h-[100svh] sticky bottom-0 top-0 transition-all duration-300 ease-in-out ${
+          collapsed ? "!min-w-[80px] w-[80px]" : "!min-w-[250px] w-[250px]"
         }`}
       >
         <Flex
