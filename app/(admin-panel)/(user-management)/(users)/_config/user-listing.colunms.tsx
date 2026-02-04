@@ -1,8 +1,11 @@
 "use client";
+import { permissions } from "@/constants/permissions";
+import AuthChecker from "@/utils/authchecker";
 import { TagGiver } from "@/utils/taggiver";
-import { IconCopy, IconDotsVertical } from "@tabler/icons-react";
-import { Avatar, Flex, TableColumnsType } from "antd";
+import { IconCopy, IconEdit } from "@tabler/icons-react";
+import { Avatar, Button, Flex, message, TableColumnsType } from "antd";
 import dayjs from "dayjs";
+import { redirect } from "next/navigation";
 
 export interface DataType {
   _id: string;
@@ -32,7 +35,13 @@ export const columns: TableColumnsType<DataType> = [
     title: "Email",
     dataIndex: "email",
     render: (value) => (
-      <div>
+      <div
+        onClick={(e) => {
+          e.stopPropagation();
+          navigator.clipboard.writeText(value);
+          message.success("Copied to clipboard");
+        }}
+      >
         {value}
         <span className="flex items-center gap-1 font-medium text-[#0096ff] text-[12px] cursor-pointer">
           <IconCopy size={16} color="#0096ff" />
@@ -51,26 +60,32 @@ export const columns: TableColumnsType<DataType> = [
     dataIndex: "status",
     render: (value) => (
       <>
-        <TagGiver value={"Active"} />
+        <TagGiver value={value || "active"} />
       </>
     ),
   },
   {
     title: "Role",
     dataIndex: "role",
-    render: (value) => (
-      <>
-        <TagGiver value={"Super Admin"} />
-      </>
-    ),
+    render: (value) => <>{value}</>,
   },
   {
-    title: "Actions",
+    title: (
+      <Flex className="" justify="center">
+        Actions
+      </Flex>
+    ),
     dataIndex: "actions",
-    render: (value) => (
-      //   <Flex justify="end">
-      <IconDotsVertical size={16} />
-      //   </Flex>
+    render: (value, record) => (
+      <AuthChecker permission={permissions.user.update}>
+        <Flex justify="center">
+          <Button
+            type="text"
+            icon={<IconEdit size={16} />}
+            onClick={() => redirect("edit-user/" + record._id)}
+          />
+        </Flex>
+      </AuthChecker>
     ),
   },
 ];

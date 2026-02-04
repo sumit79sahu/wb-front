@@ -1,36 +1,22 @@
-import { title } from "process";
+import { permissions } from "./permissions";
 
 export const MENU = [
   {
-    key: "product-managment",
-    label: "Product Management",
-  },
-  {
     key: "user-managment",
     label: "User Management",
+    permissions: [permissions.user.view, permissions["access control"].view],
     children: [
       {
         key: "user",
         label: "Users",
         path: "/list-users",
+        permission: permissions.user.view,
       },
       {
-        key: "customer",
-        label: "Customers",
-      },
-    ],
-  },
-  {
-    key: "order-management",
-    label: "Order Management",
-    children: [
-      {
-        key: "user",
-        label: "Users",
-      },
-      {
-        key: "customer",
-        label: "Customers",
+        key: "access-control",
+        label: "Access Control",
+        path: "/access-control",
+        permission: permissions["access control"].view,
       },
     ],
   },

@@ -7,16 +7,11 @@ export const TagGiver = ({ value }: { value: string }) => {
         Active
       </Tag>
     );
-  if (value.toLowerCase() === "incactive")
+  if (value.toLowerCase() === "inactive")
     return (
-      <Tag color={"danger"} variant="outlined" className="!text-sm !pb-[2px]">
+      <Tag color={"red"} variant="outlined" className="!text-sm !pb-[2px]">
         In active
       </Tag>
     );
-  if (value.toLowerCase() === "super admin")
-    return (
-      <Tag color={"purple"} variant="outlined" className="!text-sm !pb-[2px]">
-        Super Admin
-      </Tag>
-    );
+
 };
