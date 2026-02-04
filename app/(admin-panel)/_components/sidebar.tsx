@@ -83,6 +83,7 @@ const Sidebar = ({
               className="!px-[5px]"
             />
             <Button
+              aria-label="Close sidebar"
               icon={<IconX className="mt-[5px]" size={22} color="#00033DCC" />}
               type="text"
               onClick={() => setOpen(false)}
