@@ -97,6 +97,7 @@ function Listing<T>({
               dataSource={listingData}
               pagination={false}
               loading={loading}
+              scroll={{ x: "max-content" }}
             />
           </div>
           <Activity mode={total <= 10 ? "hidden" : "visible"}>
