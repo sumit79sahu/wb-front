@@ -29,8 +29,8 @@ const Sidebar = ({
   return (
     <>
       <div
-        className={`border-r border-gray-300 hidden md:block  h-[100svh] sticky bottom-0 top-0   ${
-          collapsed ? "!min-w-[80px]" : "!min-w-[250px]"
+        className={`border-r border-gray-300 hidden md:block h-[100svh] sticky bottom-0 top-0 transition-all duration-300 ease-in-out ${
+          collapsed ? "!min-w-[80px] w-[80px]" : "!min-w-[250px] w-[250px]"
         }`}
       >
         <Flex
@@ -48,19 +48,20 @@ const Sidebar = ({
             className="!px-[5px]"
           />
           <Activity mode={collapsed ? "hidden" : "visible"}>
-            <Button
-              onClick={expandFn}
-              aria-label="Collapse sidebar"
-              title="Collapse sidebar"
-              icon={
-                <IconLayoutSidebarLeftCollapse
-                  size={22}
-                  color="#0096FF"
-                  className="!mt-[4px]"
-                />
-              }
-              className="!rounded-full !bg-[#136ae317] !p-[18px] !border-none"
-            />
+            <Tooltip title="Collapse Sidebar" placement="right">
+              <Button
+                onClick={expandFn}
+                aria-label="Collapse Sidebar"
+                icon={
+                  <IconLayoutSidebarLeftCollapse
+                    size={22}
+                    color="#0096FF"
+                    className="!mt-[4px]"
+                  />
+                }
+                className="!rounded-full !bg-[#136ae317] !p-[18px] !border-none"
+              />
+            </Tooltip>
           </Activity>
         </Flex>
         <SidebarItem collapsed={collapsed} drawer={false} />
@@ -127,6 +128,7 @@ const SidebarItem = ({
                           return label;
                         })
                       }
+                      aria-label={collapsed && !drawer ? label : undefined}
                       className={`!flex items-center justify-between w-full text-[#00033DCC] gap-[10px] rounded-md text-sm font-medium hover:bg-[#136ae317] hover:text-[#0096FF] ${
                         collapsed && !drawer
                           ? "justify-center"
@@ -198,6 +200,7 @@ const SidebarItem = ({
                   collapsed && !drawer ? "justify-center" : "px-[13px]"
                 } py-[10px]`}
                 onClick={() => redirect(path)}
+                aria-label={collapsed && !drawer ? label : undefined}
               >
                 {MENU_ICON[label]}
                 {collapsed && !drawer ? "" : label}
