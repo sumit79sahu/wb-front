@@ -52,6 +52,7 @@ const NavbarDropdown = () => {
         align="center"
         justify="center"
         gap={15}
+        aria-label="User settings"
         className="!bg-[#136ae317] !w-fit  !px-[6px] rounded-full cursor-pointer "
       >
         <Avatar

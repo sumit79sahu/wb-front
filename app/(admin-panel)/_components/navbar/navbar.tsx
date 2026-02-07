@@ -1,5 +1,5 @@
 import { IconLayoutSidebarRightCollapse } from "@tabler/icons-react";
-import { Flex, Button } from "antd";
+import { Flex, Button, Tooltip } from "antd";
 import { Activity } from "react";
 import NavbarDropdown from "./_components/navbar-dropdown";
 
@@ -20,17 +20,20 @@ const Navbar = ({
     >
       <Flex gap={20} align="center">
         <Activity mode={collapsed ? "visible" : "hidden"}>
-          <Button
-            onClick={() => expandFn()}
-            icon={
-              <IconLayoutSidebarRightCollapse
-                size={22}
-                color="#0096FF"
-                className="!mt-[4px]"
-              />
-            }
-            className="!rounded-full !bg-[#136ae317] !p-[18px] !border-none"
-          />
+          <Tooltip title="Expand sidebar" placement="right">
+            <Button
+              onClick={() => expandFn()}
+              aria-label="Expand sidebar"
+              icon={
+                <IconLayoutSidebarRightCollapse
+                  size={22}
+                  color="#0096FF"
+                  className="!mt-[4px]"
+                />
+              }
+              className="!rounded-full !bg-[#136ae317] !p-[18px] !border-none"
+            />
+          </Tooltip>
         </Activity>
       </Flex>
       <NavbarDropdown />
