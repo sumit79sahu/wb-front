@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/hook";
 import { loggedUser } from "@/lib/slices/user.slice";
 import { getRequest } from "@/utils/request";
 import { IconLogout, IconSettings } from "@tabler/icons-react";
-import { Avatar, Dropdown, Flex, message } from "antd";
+import { Avatar, Dropdown, Flex, message, Tooltip } from "antd";
 import type { MenuProps } from "antd";
 import { useRouter } from "next/navigation";
 
@@ -48,21 +48,25 @@ const NavbarDropdown = () => {
       }}
       trigger={["click"]}
     >
-      <Flex
-        align="center"
-        justify="center"
-        gap={15}
-        className="!bg-[#136ae317] !w-fit  !px-[6px] rounded-full cursor-pointer "
-      >
-        <Avatar
+      <Tooltip title="User profile" placement="bottomRight">
+        <Flex
+          align="center"
+          justify="center"
+          gap={15}
+          role="button"
+          aria-label="User profile"
+          className="!bg-[#136ae317] !w-fit  !px-[6px] rounded-full cursor-pointer "
+        >
+          <Avatar
           style={{ background: "#FDDA0D" }}
           size={"default"}
           className="!mt-[5px] !mb-[6px]"
         >
           {user?.first_name.charAt(0)?.toUpperCase()}
         </Avatar>
-        <IconSettings size={24} color="#0096FF" />
-      </Flex>
+          <IconSettings size={24} color="#0096FF" />
+        </Flex>
+      </Tooltip>
     </Dropdown>
   );
 };
