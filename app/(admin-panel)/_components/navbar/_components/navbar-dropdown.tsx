@@ -15,27 +15,21 @@ const NavbarDropdown = () => {
   const items: MenuProps["items"] = [
     {
       key: "3",
-      label: (
-        <button
-          className="bg-none "
-          onClick={async () => {
-            dispatch(loggedUser({ loading: true, user: null }));
-            const response = await getRequest({
-              endpoint: ENDPOINTS.logout,
-              credentials: "include",
-            });
-            if (response?.success) {
-              dispatch(loggedUser({ loading: false, user: null }));
-              message.success(response?.message);
-              router.push("/login");
-            } else {
-              message.error(response?.message);
-            }
-          }}
-        >
-          Logout
-        </button>
-      ),
+      label: "Logout",
+      onClick: async () => {
+        dispatch(loggedUser({ loading: true, user: null }));
+        const response = await getRequest({
+          endpoint: ENDPOINTS.logout,
+          credentials: "include",
+        });
+        if (response?.success) {
+          dispatch(loggedUser({ loading: false, user: null }));
+          message.success(response?.message);
+          router.push("/login");
+        } else {
+          message.error(response?.message);
+        }
+      },
       icon: <IconLogout size={20} />,
     },
   ];
@@ -49,6 +43,9 @@ const NavbarDropdown = () => {
       trigger={["click"]}
     >
       <Flex
+        role="button"
+        aria-label="User menu"
+        tabIndex={0}
         align="center"
         justify="center"
         gap={15}
