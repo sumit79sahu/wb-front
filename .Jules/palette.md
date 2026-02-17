@@ -1,0 +1,3 @@
+## 2025-05-15 - Navigation Accessibility and Feedback
+**Learning:** Icon-only buttons in the sidebar and navbar lacked descriptive labels and tooltips, making them inaccessible to screen readers and potentially confusing when collapsed. Custom interactive elements like the profile dropdown trigger (Flex div) lacked keyboard focus indicators and handlers.
+**Action:** Always wrap icon-only toggle buttons in Ant Design `Tooltip` and provide an `aria-label`. For custom interactive `div` or `Flex` elements, add `role="button"`, `tabIndex={0}`, and an `onKeyDown` handler to support keyboard users. Use Tailwind's `focus-visible` utilities to provide clear focus states without affecting mouse users.
