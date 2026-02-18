@@ -4,7 +4,7 @@ import {
   IconLayoutSidebarLeftCollapse,
   IconX,
 } from "@tabler/icons-react";
-import { Button, Drawer, Flex } from "antd";
+import { Button, Drawer, Flex, Tooltip } from "antd";
 import { Activity, Dispatch, SetStateAction, useState } from "react";
 import logo from "@/public/logo.png";
 import Image from "next/image";
@@ -112,32 +112,33 @@ const SidebarItem = ({
             <React.Fragment key={key}>
               {permissions.some((item) => user?.permissions?.includes(item)) ? (
                 <React.Fragment>
-                  <button
-                    key={key}
-                    onClick={() =>
-                      setSubMenu((pre) => {
-                        if (pre === label) return null;
-                        return label;
-                      })
-                    }
-                    className={`!flex items-center justify-between w-full text-[#00033DCC] gap-[10px] rounded-md text-sm font-medium hover:bg-[#136ae317] hover:text-[#0096FF] ${
-                      collapsed && !drawer
-                        ? "justify-center"
-                        : "pl-[13px] pr-[15px]"
-                    } py-[10px]`}
-                  >
-                    <Flex gap={10}>
-                      {MENU_ICON[label]}
-                      {collapsed && !drawer ? "" : label}
-                    </Flex>
-                    {collapsed && !drawer ? (
-                      ""
-                    ) : subMenu === label ? (
-                      <IconChevronUp size={16} className="mt-[2px]" />
-                    ) : (
-                      <IconChevronDown size={16} className="mt-[2px]" />
-                    )}
-                  </button>
+                  <Tooltip key={key} title={collapsed && !drawer ? label : ""} placement="right">
+                    <button
+                      onClick={() =>
+                        setSubMenu((pre) => {
+                          if (pre === label) return null;
+                          return label;
+                        })
+                      }
+                      className={`!flex items-center justify-between w-full text-[#00033DCC] gap-[10px] rounded-md text-sm font-medium hover:bg-[#136ae317] hover:text-[#0096FF] ${
+                        collapsed && !drawer
+                          ? "justify-center"
+                          : "pl-[13px] pr-[15px]"
+                      } py-[10px]`}
+                    >
+                      <Flex gap={10}>
+                        {MENU_ICON[label]}
+                        {collapsed && !drawer ? "" : label}
+                      </Flex>
+                      {collapsed && !drawer ? (
+                        ""
+                      ) : subMenu === label ? (
+                        <IconChevronUp size={16} className="mt-[2px]" />
+                      ) : (
+                        <IconChevronDown size={16} className="mt-[2px]" />
+                      )}
+                    </button>
+                  </Tooltip>
                   <Activity mode={subMenu === label ? "visible" : "hidden"}>
                     {collapsed && !drawer ? (
                       <div className="relative" key={key}>
@@ -181,15 +182,17 @@ const SidebarItem = ({
         }
         return (
           <AuthChecker key={label} permission={permissions}>
-            <button
-              className={`!flex items-center w-full text-[#00033DCC] gap-[10px] rounded-md text-sm font-medium hover:bg-[#136ae317] hover:text-[#0096FF] ${
-                collapsed && !drawer ? "justify-center" : "px-[13px]"
-              } py-[10px]`}
-              onClick={() => redirect(path)}
-            >
-              {MENU_ICON[label]}
-              {collapsed && !drawer ? "" : label}
-            </button>
+            <Tooltip title={collapsed && !drawer ? label : ""} placement="right">
+              <button
+                className={`!flex items-center w-full text-[#00033DCC] gap-[10px] rounded-md text-sm font-medium hover:bg-[#136ae317] hover:text-[#0096FF] ${
+                  collapsed && !drawer ? "justify-center" : "px-[13px]"
+                } py-[10px]`}
+                onClick={() => redirect(path)}
+              >
+                {MENU_ICON[label]}
+                {collapsed && !drawer ? "" : label}
+              </button>
+            </Tooltip>
           </AuthChecker>
         );
       })}
