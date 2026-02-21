@@ -1,4 +1,4 @@
-"user client";
+"use client";
 import { ENDPOINTS } from "@/constants/endpoints";
 import { useAppDispatch, useAppSelector } from "@/lib/hook";
 import { loggedUser } from "@/lib/slices/user.slice";

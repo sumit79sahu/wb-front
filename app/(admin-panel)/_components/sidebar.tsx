@@ -4,7 +4,7 @@ import {
   IconLayoutSidebarLeftCollapse,
   IconX,
 } from "@tabler/icons-react";
-import { Button, Drawer, Flex } from "antd";
+import { Button, Drawer, Flex, Tooltip } from "antd";
 import { Activity, Dispatch, SetStateAction, useState } from "react";
 import logo from "@/public/logo.png";
 import Image from "next/image";
@@ -48,17 +48,14 @@ const Sidebar = ({
             className="!px-[5px]"
           />
           <Activity mode={collapsed ? "hidden" : "visible"}>
-            <Button
-              onClick={expandFn}
-              icon={
-                <IconLayoutSidebarLeftCollapse
-                  size={22}
-                  color="#0096FF"
-                  className="!mt-[4px]"
-                />
-              }
-              className="!rounded-full !bg-[#136ae317] !p-[18px] !border-none"
-            />
+            <Tooltip title="Collapse Sidebar" placement="right">
+              <Button
+                onClick={expandFn}
+                aria-label="Collapse Sidebar"
+                icon={<IconLayoutSidebarLeftCollapse size={22} color="#0096FF" className="!mt-[4px]" />}
+                className="!rounded-full !bg-[#136ae317] !p-[18px] !border-none"
+              />
+            </Tooltip>
           </Activity>
         </Flex>
         <SidebarItem collapsed={collapsed} drawer={false} />
@@ -181,15 +178,16 @@ const SidebarItem = ({
         }
         return (
           <AuthChecker key={label} permission={permissions}>
-            <button
-              className={`!flex items-center w-full text-[#00033DCC] gap-[10px] rounded-md text-sm font-medium hover:bg-[#136ae317] hover:text-[#0096FF] ${
-                collapsed && !drawer ? "justify-center" : "px-[13px]"
-              } py-[10px]`}
-              onClick={() => redirect(path)}
-            >
-              {MENU_ICON[label]}
-              {collapsed && !drawer ? "" : label}
-            </button>
+            <Tooltip title={collapsed && !drawer ? label : ""} placement="right">
+              <button
+                aria-label={label}
+                className={`!flex items-center w-full text-[#00033DCC] gap-[10px] rounded-md text-sm font-medium hover:bg-[#136ae317] hover:text-[#0096FF] ${collapsed && !drawer ? "justify-center" : "px-[13px]"} py-[10px]`}
+                onClick={() => redirect(path)}
+              >
+                {MENU_ICON[label]}
+                {collapsed && !drawer ? "" : label}
+              </button>
+            </Tooltip>
           </AuthChecker>
         );
       })}
