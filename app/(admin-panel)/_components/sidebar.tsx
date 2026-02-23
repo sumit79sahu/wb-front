@@ -4,14 +4,14 @@ import {
   IconLayoutSidebarLeftCollapse,
   IconX,
 } from "@tabler/icons-react";
-import { Button, Drawer, Flex } from "antd";
+import { Button, Drawer, Flex, Tooltip } from "antd";
 import { Activity, Dispatch, SetStateAction, useState } from "react";
 import logo from "@/public/logo.png";
 import Image from "next/image";
 import { MENU } from "@/constants/menu";
 import { MENU_ICON } from "@/constants/menu-icon";
 import React from "react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import AuthChecker from "@/utils/authchecker";
 import { useAppSelector } from "@/lib/hook";
 
@@ -48,17 +48,20 @@ const Sidebar = ({
             className="!px-[5px]"
           />
           <Activity mode={collapsed ? "hidden" : "visible"}>
-            <Button
-              onClick={expandFn}
-              icon={
-                <IconLayoutSidebarLeftCollapse
-                  size={22}
-                  color="#0096FF"
-                  className="!mt-[4px]"
-                />
-              }
-              className="!rounded-full !bg-[#136ae317] !p-[18px] !border-none"
-            />
+            <Tooltip title="Collapse" placement="right">
+              <Button
+                onClick={expandFn}
+                aria-label="Collapse sidebar"
+                icon={
+                  <IconLayoutSidebarLeftCollapse
+                    size={22}
+                    color="#0096FF"
+                    className="!mt-[4px]"
+                  />
+                }
+                className="!rounded-full !bg-[#136ae317] !p-[18px] !border-none"
+              />
+            </Tooltip>
           </Activity>
         </Flex>
         <SidebarItem collapsed={collapsed} drawer={false} />
@@ -83,6 +86,7 @@ const Sidebar = ({
               icon={<IconX className="mt-[5px]" size={22} color="#00033DCC" />}
               type="text"
               onClick={() => setOpen(false)}
+              aria-label="Close sidebar"
             />
           </Flex>
         }
@@ -102,6 +106,7 @@ const SidebarItem = ({
   collapsed: boolean;
   drawer: boolean;
 }) => {
+  const router = useRouter();
   const [subMenu, setSubMenu] = useState(null);
   const { user } = useAppSelector((store) => store.user);
   return (
@@ -112,32 +117,37 @@ const SidebarItem = ({
             <React.Fragment key={key}>
               {permissions.some((item) => user?.permissions?.includes(item)) ? (
                 <React.Fragment>
-                  <button
-                    key={key}
-                    onClick={() =>
-                      setSubMenu((pre) => {
-                        if (pre === label) return null;
-                        return label;
-                      })
-                    }
-                    className={`!flex items-center justify-between w-full text-[#00033DCC] gap-[10px] rounded-md text-sm font-medium hover:bg-[#136ae317] hover:text-[#0096FF] ${
-                      collapsed && !drawer
-                        ? "justify-center"
-                        : "pl-[13px] pr-[15px]"
-                    } py-[10px]`}
+                  <Tooltip
+                    title={collapsed && !drawer ? label : ""}
+                    placement="right"
                   >
+                    <button
+                      key={key}
+                      onClick={() =>
+                        setSubMenu((pre) => {
+                          if (pre === label) return null;
+                          return label;
+                        })
+                      }
+                      className={`!flex items-center justify-between w-full text-[#00033DCC] gap-[10px] rounded-md text-sm font-medium hover:bg-[#136ae317] hover:text-[#0096FF] ${
+                        collapsed && !drawer
+                          ? "justify-center"
+                          : "pl-[13px] pr-[15px]"
+                      } py-[10px]`}
+                    >
                     <Flex gap={10}>
                       {MENU_ICON[label]}
                       {collapsed && !drawer ? "" : label}
                     </Flex>
-                    {collapsed && !drawer ? (
-                      ""
-                    ) : subMenu === label ? (
-                      <IconChevronUp size={16} className="mt-[2px]" />
-                    ) : (
-                      <IconChevronDown size={16} className="mt-[2px]" />
-                    )}
-                  </button>
+                      {collapsed && !drawer ? (
+                        ""
+                      ) : subMenu === label ? (
+                        <IconChevronUp size={16} className="mt-[2px]" />
+                      ) : (
+                        <IconChevronDown size={16} className="mt-[2px]" />
+                      )}
+                    </button>
+                  </Tooltip>
                   <Activity mode={subMenu === label ? "visible" : "hidden"}>
                     {collapsed && !drawer ? (
                       <div className="relative" key={key}>
@@ -146,7 +156,7 @@ const SidebarItem = ({
                             <AuthChecker permission={permission} key={key}>
                               <button
                                 className="w-full text-left px-3 py-[5px] text-sm hover:!bg-[#136ae317] rounded-md"
-                                onClick={() => redirect(path)}
+                                onClick={() => router.push(path)}
                               >
                                 {label}
                               </button>
@@ -158,7 +168,7 @@ const SidebarItem = ({
                       children.map(({ label, key, path, permission }) => (
                         <AuthChecker key={key} permission={permission}>
                           <button
-                            onClick={() => redirect(path)}
+                            onClick={() => router.push(path)}
                             className={`!flex items-center w-full text-[#00033DCC] gap-[10px] rounded-md text-sm font-medium hover:bg-[#136ae317] hover:text-[#0096FF] ${
                               collapsed && !drawer
                                 ? "justify-center"
@@ -181,15 +191,20 @@ const SidebarItem = ({
         }
         return (
           <AuthChecker key={label} permission={permissions}>
-            <button
-              className={`!flex items-center w-full text-[#00033DCC] gap-[10px] rounded-md text-sm font-medium hover:bg-[#136ae317] hover:text-[#0096FF] ${
-                collapsed && !drawer ? "justify-center" : "px-[13px]"
-              } py-[10px]`}
-              onClick={() => redirect(path)}
+            <Tooltip
+              title={collapsed && !drawer ? label : ""}
+              placement="right"
             >
-              {MENU_ICON[label]}
-              {collapsed && !drawer ? "" : label}
-            </button>
+              <button
+                className={`!flex items-center w-full text-[#00033DCC] gap-[10px] rounded-md text-sm font-medium hover:bg-[#136ae317] hover:text-[#0096FF] ${
+                  collapsed && !drawer ? "justify-center" : "px-[13px]"
+                } py-[10px]`}
+                onClick={() => router.push(path)}
+              >
+                {MENU_ICON[label]}
+                {collapsed && !drawer ? "" : label}
+              </button>
+            </Tooltip>
           </AuthChecker>
         );
       })}
