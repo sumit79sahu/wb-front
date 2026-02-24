@@ -1,4 +1,4 @@
-"user client";
+"use client";
 import { ENDPOINTS } from "@/constants/endpoints";
 import { useAppDispatch, useAppSelector } from "@/lib/hook";
 import { loggedUser } from "@/lib/slices/user.slice";
@@ -49,10 +49,19 @@ const NavbarDropdown = () => {
       trigger={["click"]}
     >
       <Flex
+        role="button"
+        tabIndex={0}
+        aria-label="User settings"
         align="center"
         justify="center"
         gap={15}
-        className="!bg-[#136ae317] !w-fit  !px-[6px] rounded-full cursor-pointer "
+        className="!bg-[#136ae317] !w-fit  !px-[6px] rounded-full cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0096FF]"
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            (e.currentTarget as HTMLElement).click();
+          }
+        }}
       >
         <Avatar
           style={{ background: "#FDDA0D" }}
