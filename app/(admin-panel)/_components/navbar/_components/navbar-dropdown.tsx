@@ -1,4 +1,4 @@
-"user client";
+"use client";
 import { ENDPOINTS } from "@/constants/endpoints";
 import { useAppDispatch, useAppSelector } from "@/lib/hook";
 import { loggedUser } from "@/lib/slices/user.slice";
@@ -14,29 +14,23 @@ const NavbarDropdown = () => {
   const router = useRouter();
   const items: MenuProps["items"] = [
     {
-      key: "3",
-      label: (
-        <button
-          className="bg-none "
-          onClick={async () => {
-            dispatch(loggedUser({ loading: true, user: null }));
-            const response = await getRequest({
-              endpoint: ENDPOINTS.logout,
-              credentials: "include",
-            });
-            if (response?.success) {
-              dispatch(loggedUser({ loading: false, user: null }));
-              message.success(response?.message);
-              router.push("/login");
-            } else {
-              message.error(response?.message);
-            }
-          }}
-        >
-          Logout
-        </button>
-      ),
+      key: "logout",
+      label: "Logout",
       icon: <IconLogout size={20} />,
+      onClick: async () => {
+        dispatch(loggedUser({ loading: true, user: null }));
+        const response = await getRequest({
+          endpoint: ENDPOINTS.logout,
+          credentials: "include",
+        });
+        if (response?.success) {
+          dispatch(loggedUser({ loading: false, user: null }));
+          message.success(response?.message);
+          router.push("/login");
+        } else {
+          message.error(response?.message);
+        }
+      },
     },
   ];
 
@@ -52,7 +46,16 @@ const NavbarDropdown = () => {
         align="center"
         justify="center"
         gap={15}
-        className="!bg-[#136ae317] !w-fit  !px-[6px] rounded-full cursor-pointer "
+        className="!bg-[#136ae317] !w-fit !px-[6px] rounded-full cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-[#0096FF]"
+        role="button"
+        tabIndex={0}
+        aria-label="User menu"
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            e.currentTarget.click();
+          }
+        }}
       >
         <Avatar
           style={{ background: "#FDDA0D" }}
