@@ -1,0 +1,3 @@
+## 2025-05-15 - Improving Dropdown Accessibility and Ant Design Integration
+**Learning:** Custom interactive elements like the `NavbarDropdown` trigger (using `Flex` or `div`) require explicit `role="button"`, `tabIndex={0}`, an `aria-label`, and an `onKeyDown` handler (to trigger a click on 'Enter' or 'Space') for full keyboard accessibility. Additionally, Ant Design `Dropdown` items should use the `onClick` property instead of nesting interactive elements in the `label` for better consistency and event handling.
+**Action:** Always check non-semantic triggers for keyboard accessibility and prefer Ant Design's built-in item properties over custom nested markup.

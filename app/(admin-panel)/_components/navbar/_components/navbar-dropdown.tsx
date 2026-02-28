@@ -1,4 +1,4 @@
-"user client";
+"use client";
 import { ENDPOINTS } from "@/constants/endpoints";
 import { useAppDispatch, useAppSelector } from "@/lib/hook";
 import { loggedUser } from "@/lib/slices/user.slice";
@@ -15,30 +15,31 @@ const NavbarDropdown = () => {
   const items: MenuProps["items"] = [
     {
       key: "3",
-      label: (
-        <button
-          className="bg-none "
-          onClick={async () => {
-            dispatch(loggedUser({ loading: true, user: null }));
-            const response = await getRequest({
-              endpoint: ENDPOINTS.logout,
-              credentials: "include",
-            });
-            if (response?.success) {
-              dispatch(loggedUser({ loading: false, user: null }));
-              message.success(response?.message);
-              router.push("/login");
-            } else {
-              message.error(response?.message);
-            }
-          }}
-        >
-          Logout
-        </button>
-      ),
+      label: "Logout",
+      onClick: async () => {
+        dispatch(loggedUser({ loading: true, user: null }));
+        const response = await getRequest({
+          endpoint: ENDPOINTS.logout,
+          credentials: "include",
+        });
+        if (response?.success) {
+          dispatch(loggedUser({ loading: false, user: null }));
+          message.success(response?.message);
+          router.push("/login");
+        } else {
+          message.error(response?.message);
+        }
+      },
       icon: <IconLogout size={20} />,
     },
   ];
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      (e.currentTarget as HTMLElement).click();
+    }
+  };
 
   return (
     <Dropdown
@@ -49,10 +50,14 @@ const NavbarDropdown = () => {
       trigger={["click"]}
     >
       <Flex
+        role="button"
+        tabIndex={0}
+        aria-label="User menu"
+        onKeyDown={handleKeyDown}
         align="center"
         justify="center"
         gap={15}
-        className="!bg-[#136ae317] !w-fit  !px-[6px] rounded-full cursor-pointer "
+        className="!bg-[#136ae317] !w-fit !px-[6px] rounded-full cursor-pointer focus-visible:ring-2 focus-visible:ring-[#0096FF] focus-visible:outline-none"
       >
         <Avatar
           style={{ background: "#FDDA0D" }}
